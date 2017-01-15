@@ -20,22 +20,31 @@ namespace AzureManageLib.ConsoleHost
             this.credentials = credentials;
         }
 
-        internal async Task<StepResult> CreateCloudServiceAsync( string serviceName )
+        internal async Task<StepResult> CreateCloudServiceAsync(string serviceName)
         {
             try
             {
                 using (var computeClient = new ComputeManagementClient(this.credentials))
                 {
-                    await computeClient.HostedServices.CreateAsync(
-                      new HostedServiceCreateParameters
-                      {
-                          Label = "azurelibservice",
-                          Location = LocationNames.WestEurope,
-                          ServiceName = serviceName
-                      }).ConfigureAwait(false);
+                    var free = await computeClient.HostedServices.CheckNameAvailabilityAsync(serviceName).ConfigureAwait(false);
+                    if (free.IsAvailable)
+                    {
+                        await computeClient.HostedServices.CreateAsync(
+                          new HostedServiceCreateParameters
+                          {
+                              Label = "azurelibservice",
+                              Location = LocationNames.WestEurope,
+                              ServiceName = serviceName
+                          }).ConfigureAwait(false);
+                        return new StepResult() { Succed = true, Message = "Creado el servicio" };
+                    }
+                    else
+                    {
+                        Console.WriteLine("Servicio ya existente. ¿Proseguir con este?");
+                        var result = Console.ReadLine() == "y";
+                        return new StepResult() { Succed = result, Message = "Nombre ya utilizado" };
+                    }
                 }
-
-                return new StepResult() { Succed = true, Message = "Creado el servicio" };
             }
             catch (Exception ex)
             {

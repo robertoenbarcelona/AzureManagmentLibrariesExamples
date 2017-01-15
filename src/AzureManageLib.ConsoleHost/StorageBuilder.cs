@@ -29,21 +29,22 @@ namespace AzureManageLib.ConsoleHost
                     if (free.IsAvailable)
                     {
                         await storageClient.StorageAccounts.CreateAsync(
-                      new StorageAccountCreateParameters
-                      {
-                          Label = "azurelibstorage",
-                          AccountType= "Standard_LRS", 
-                          Location = LocationNames.WestEurope,
-                          Name = storageName
-                      }).ConfigureAwait(false);
+                            new StorageAccountCreateParameters
+                            {
+                                Label = "azurelibstorage",
+                                AccountType = "Standard_LRS",
+                                Location = LocationNames.WestEurope,
+                                Name = storageName
+                            }).ConfigureAwait(false);
+                        return new StepResult() { Succed = true, Message = "Storage creado" };
                     }
                     else
                     {
-                        return new StepResult() { Succed = false, Message = "Nombre ya utilizado" };
+                        Console.WriteLine("Storage ya existente. ¿Proseguir con este?");
+                        var result = Console.ReadLine() == "y";
+                        return new StepResult() { Succed = result, Message = "Nombre ya utilizado" };
                     }
                 }
-
-                return new StepResult() { Succed = true, Message = "Storage creado" };
             }
             catch (Exception ex)
             {

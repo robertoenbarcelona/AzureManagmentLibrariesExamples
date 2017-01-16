@@ -97,6 +97,7 @@ namespace AzureManagmentLibPre.ConsoleHost
                         ConfigurationManager.AppSettings["nicName"],
                         ConfigurationManager.AppSettings["groupName"])
                     .Result;
+            Console.WriteLine(result.Message);
             return result.Succed;
         }
 

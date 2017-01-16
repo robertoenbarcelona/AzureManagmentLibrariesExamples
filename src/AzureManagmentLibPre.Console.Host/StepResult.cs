@@ -1,5 +1,4 @@
-﻿
-namespace AzureManageLib.ConsoleHost
+﻿namespace AzureManagmentLibPre.ConsoleHost
 {
     internal class StepResult
     {

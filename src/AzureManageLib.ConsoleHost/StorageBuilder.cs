@@ -9,7 +9,6 @@ namespace AzureManageLib.ConsoleHost
     using System;
     using System.Threading.Tasks;
 
-
     internal class StorageBuilder
     {
         private readonly SubscriptionCloudCredentials credentials;
@@ -38,12 +37,10 @@ namespace AzureManageLib.ConsoleHost
                             }).ConfigureAwait(false);
                         return new StepResult() { Succed = true, Message = "Storage creado" };
                     }
-                    else
-                    {
-                        Console.WriteLine("Storage ya existente. ¿Proseguir con este?");
-                        var result = Console.ReadLine() == "y";
-                        return new StepResult() { Succed = result, Message = "Nombre ya utilizado" };
-                    }
+
+                    Console.WriteLine("Storage ya existente. ¿Proseguir con este?");
+                    var result = Console.ReadLine() == "y";
+                    return new StepResult() { Succed = result, Message = "Nombre ya utilizado" };
                 }
             }
             catch (Exception ex)

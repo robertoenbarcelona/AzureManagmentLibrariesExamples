@@ -10,6 +10,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution files", "Solution 
 		..\README.md = ..\README.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureManagmentLibPre.ConsoleHost", "..\src\AzureManagmentLibPre.Console.Host\AzureManagmentLibPre.ConsoleHost.csproj", "{61A7E71E-9D7A-4D29-BED7-E3E359085ADC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,6 +22,10 @@ Global
 		{CAE7AFDA-1CFB-4A81-89EE-4BA31FB1EA99}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CAE7AFDA-1CFB-4A81-89EE-4BA31FB1EA99}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CAE7AFDA-1CFB-4A81-89EE-4BA31FB1EA99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61A7E71E-9D7A-4D29-BED7-E3E359085ADC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61A7E71E-9D7A-4D29-BED7-E3E359085ADC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61A7E71E-9D7A-4D29-BED7-E3E359085ADC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61A7E71E-9D7A-4D29-BED7-E3E359085ADC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

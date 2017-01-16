@@ -24,8 +24,6 @@ namespace AzureManageLib.ConsoleHost
             {
                 using (var computeClient = new ComputeManagementClient(this.credentials))
                 {
-                    //var operatingSystemImageListResult = await computeClient.VirtualMachineOSImages.ListAsync().ConfigureAwait(false);
-                    //var imageName = operatingSystemImageListResult.Images.FirstOrDefault(x => x.Label.Contains(imagePattern)).Name;
                     var imageName = (await computeClient.VirtualMachineOSImages.GetAsync(imagePattern).ConfigureAwait(false)).Name;
                     var windowsConfigSet = new ConfigurationSet
                     {

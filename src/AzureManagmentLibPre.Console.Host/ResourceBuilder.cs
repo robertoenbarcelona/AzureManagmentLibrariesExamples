@@ -14,7 +14,7 @@ namespace AzureManagmentLibPre.ConsoleHost
 
         public ResourceBuilder(SubscriptionCloudCredentials credential)
         {
-            var resourceManagementClient = new ResourceManagementClient(credential);
+            var resourceManagementClient = new ResourceManagementClient(credential) ; 
             Console.WriteLine("Registrando los providers...");
             var rpResult = resourceManagementClient.Providers.Register("Microsoft.Storage");
             Console.WriteLine($"Microsoft.Storage: {rpResult.StatusCode}");

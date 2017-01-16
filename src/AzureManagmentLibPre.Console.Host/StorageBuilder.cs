@@ -24,8 +24,7 @@ namespace AzureManagmentLibPre.ConsoleHost
         {
             try
             {
-                var storageManagementClient = new StorageManagementClient(credentials) { SubscriptionId = this.subscriptionId };
-                using (var storageClient = new StorageManagementClient(this.credentials))
+                using (var storageClient = new StorageManagementClient(this.credentials) { SubscriptionId = this.subscriptionId })
                 {
                     var free = await storageClient.StorageAccounts.CheckNameAvailabilityAsync(storageName).ConfigureAwait(false);
                     if (free.NameAvailable.HasValue && free.NameAvailable.Value)

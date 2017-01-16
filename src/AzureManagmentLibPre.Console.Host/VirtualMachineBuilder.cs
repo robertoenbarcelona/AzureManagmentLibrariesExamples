@@ -26,64 +26,61 @@ namespace AzureManagmentLibPre.ConsoleHost
             Console.WriteLine("Creando la virtual machine...");
             try
             {
-                using (var computeClient = new ComputeManagementClient(this.credentials) { SubscriptionId = this.subscriptionId })
+                using (var computeManagementClient = new ComputeManagementClient(this.credentials) { SubscriptionId = this.subscriptionId })
                 {
                     using (var networkManagementClient = new NetworkManagementClient(this.credentials) { SubscriptionId = subscriptionId })
                     {
                         var nic = networkManagementClient.NetworkInterfaces.Get(groupName, nicName);
-                        using (var computeManagementClient = new ComputeManagementClient(this.credentials) { SubscriptionId = subscriptionId })
-                        {
-                            var avSet = computeManagementClient.AvailabilitySets.Get(groupName, avsetName);
-                            var res = await computeManagementClient.VirtualMachines.CreateOrUpdateAsync(
-                                        groupName,
-                                        vmName,
-                                        new VirtualMachine
+                        var avSet = computeManagementClient.AvailabilitySets.Get(groupName, avsetName);
+                        var res = await computeManagementClient.VirtualMachines.CreateOrUpdateAsync(
+                                    groupName,
+                                    vmName,
+                                    new VirtualMachine
+                                    {
+                                        Location = LocationNames.WestEurope,
+                                        AvailabilitySet = new SubResource
                                         {
-                                            Location = LocationNames.WestEurope,
-                                            AvailabilitySet = new SubResource
+                                            Id = avSet.Id
+                                        },
+                                        HardwareProfile = new HardwareProfile
+                                        {
+                                            VmSize = "Standard_A0"
+                                        },
+                                        OsProfile = new OSProfile
+                                        {
+                                            AdminUsername = adminName,
+                                            AdminPassword = adminPwd,
+                                            ComputerName = vmName,
+                                            WindowsConfiguration = new WindowsConfiguration
                                             {
-                                                Id = avSet.Id
+                                                ProvisionVMAgent = true
+                                            }
+                                        },
+                                        NetworkProfile = new NetworkProfile
+                                        {
+                                            NetworkInterfaces = new List<NetworkInterfaceReference> { new NetworkInterfaceReference { Id = nic.Id } }
+                                        },
+                                        StorageProfile = new StorageProfile
+                                        {
+                                            ImageReference = new ImageReference
+                                            {
+                                                Publisher = "MicrosoftWindowsServer",
+                                                Offer = "WindowsServer",
+                                                Sku = "2012-R2-Datacenter",
+                                                Version = "latest"
                                             },
-                                            HardwareProfile = new HardwareProfile
+                                            OsDisk = new OSDisk
                                             {
-                                                VmSize = "Standard_A0"
-                                            },
-                                            OsProfile = new OSProfile
-                                            {
-                                                AdminUsername = adminName,
-                                                AdminPassword = adminPwd,
-                                                ComputerName = vmName,
-                                                WindowsConfiguration = new WindowsConfiguration
+                                                Name = "myazlintestdisk",
+                                                CreateOption = DiskCreateOptionTypes.FromImage,
+                                                Vhd = new VirtualHardDisk
                                                 {
-                                                    ProvisionVMAgent = true
-                                                }
-                                            },
-                                            NetworkProfile = new NetworkProfile
-                                            {
-                                                NetworkInterfaces = new List<NetworkInterfaceReference> { new NetworkInterfaceReference { Id = nic.Id } }
-                                            },
-                                            StorageProfile = new StorageProfile
-                                            {
-                                                ImageReference = new ImageReference
-                                                {
-                                                    Publisher = "MicrosoftWindowsServer",
-                                                    Offer = "WindowsServer",
-                                                    Sku = "2012-R2-Datacenter",
-                                                    Version = "latest"
-                                                },
-                                                OsDisk = new OSDisk
-                                                {
-                                                    Name = "myazlintestdisk",
-                                                    CreateOption = DiskCreateOptionTypes.FromImage,
-                                                    Vhd = new VirtualHardDisk
-                                                    {
-                                                        Uri = "http://" + storageName + ".blob.core.windows.net/vhds/myazlintestdisk.vhd"
-                                                    }
+                                                    Uri = "http://" + storageName + ".blob.core.windows.net/vhds/myazlintestdisk.vhd"
                                                 }
                                             }
                                         }
-                            ).ConfigureAwait(false);
-                        }
+                                    }
+                        ).ConfigureAwait(false);
                     }
 
                     return new StepResult() { Succed = true, Message = "VM creada" };

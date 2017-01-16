@@ -15,11 +15,11 @@ namespace AzureManagmentLibPre.ConsoleHost
         {
             var token = GetAuthorizationHeader();
             var subscripcionId = ConfigurationManager.AppSettings["subscriptionId"];
-            var credential = new TokenCredentials(token);
-            var proceed = CreateResourceGroup(new TokenCloudCredentials(token));
+            var proceed = CreateResourceGroup(new TokenCloudCredentials(subscripcionId, token));
             Console.WriteLine("¿Proseguir?");
             Console.ReadLine();
             if (!proceed) { return; }
+            var credential = new TokenCredentials(token);
             ExecuteArmAPI(credential, subscripcionId);
             Console.WriteLine("¿Cierre?");
             Console.ReadLine();

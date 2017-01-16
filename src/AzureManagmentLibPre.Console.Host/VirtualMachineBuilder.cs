@@ -23,7 +23,6 @@ namespace AzureManagmentLibPre.ConsoleHost
 
         internal async Task<StepResult> CreateVirtualMachineAsync(string adminName, string adminPwd, string vmName, string storageName, string nicName, string avsetName, string groupName)
         {
-            Console.WriteLine("Creando la virtual machine...");
             try
             {
                 using (var computeManagementClient = new ComputeManagementClient(this.credentials) { SubscriptionId = this.subscriptionId })

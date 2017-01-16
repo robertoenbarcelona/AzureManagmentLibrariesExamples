@@ -21,7 +21,6 @@ namespace AzureManagmentLibPre.ConsoleHost
 
         internal async Task<StepResult> CreateAvailabilityAsync(string avsetName, string groupName)
         {
-            Console.WriteLine("Creando el availability set...");
             try
             {
                 using (var computeClient = new ComputeManagementClient(this.credentials) { SubscriptionId = subscriptionId })

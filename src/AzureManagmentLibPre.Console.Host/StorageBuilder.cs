@@ -41,7 +41,7 @@ namespace AzureManagmentLibPre.ConsoleHost
                         return new StepResult() { Succed = true, Message = "Storage creado" };
                     }
 
-                    Console.WriteLine("ResourceGroup ya existente. ¿Proseguir con este?");
+                    Console.WriteLine("Storage ya existente. ¿Proseguir con este?");
                     var result = Console.ReadLine() == "y";
                     return new StepResult() { Succed = result, Message = "Nombre ya utilizado" };
                 }

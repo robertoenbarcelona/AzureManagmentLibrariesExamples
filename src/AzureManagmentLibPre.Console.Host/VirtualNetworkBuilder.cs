@@ -25,7 +25,7 @@ namespace AzureManagmentLibPre.ConsoleHost
             try
             {
                 Console.WriteLine("Creando el IP publico ...");
-                using (var networkManagementClient = new NetworkManagementClient(this.credentials))
+                using (var networkManagementClient = new NetworkManagementClient(this.credentials) { SubscriptionId = this.subscriptionId })
                 {
                     var res = await networkManagementClient.PublicIPAddresses.CreateOrUpdateAsync(
                          groupName,

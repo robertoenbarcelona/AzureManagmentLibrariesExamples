@@ -80,9 +80,9 @@ namespace AzureManagmentLibPre.ConsoleHost
                                         }
                                     }
                         ).ConfigureAwait(false);
-                    }
 
-                    return new StepResult() { Succed = true, Message = "VM creada" };
+                        return new StepResult() { Succed = true, Message = $"VM creada: {res.ProvisioningState}" };
+                    }
                 }
             }
             catch (Exception ex)

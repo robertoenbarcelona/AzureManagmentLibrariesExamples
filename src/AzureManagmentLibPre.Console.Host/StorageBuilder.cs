@@ -30,8 +30,8 @@ namespace AzureManagmentLibPre.ConsoleHost
                     if (free.NameAvailable.HasValue && free.NameAvailable.Value)
                     {
                         await storageClient.StorageAccounts.CreateAsync(
-                            storageName,
                             resourceName,
+                            storageName,
                             new StorageAccountCreateParameters
                             {
                                 Sku = new Sku() { Name = SkuName.StandardLRS },

@@ -53,101 +53,58 @@ namespace AzureManageLib.ConsoleHost
             }
         }
 
-        private static bool CreateStorage(TokenCloudCredentials credential, bool isArm = false)
+        private static bool CreateStorage(TokenCloudCredentials credential)
         {
             Console.WriteLine("Creando storage...");
             StorageBuilder = new StorageBuilder(credential);
-            var name = ConfigurationManager.AppSettings["storageName"];
-            if (isArm)
-            {
-                name += "arm";
-            }
-
-            var result = StorageBuilder.CreateStorageAccountAsync(name).Result;
+            var result = StorageBuilder.CreateStorageAccountAsync(ConfigurationManager.AppSettings["storageName"]).Result;
             Console.WriteLine(result.Message);
             return result.Succed;
         }
 
-        private static void DeleteStorage(bool isArm = false)
+        private static void DeleteStorage()
         {
             Console.WriteLine("Eliminando el storage...");
-            var name = ConfigurationManager.AppSettings["storageName"];
-            if (isArm)
-            {
-                name += "arm";
-            }
-
-            var result = StorageBuilder.DeleteStorageAccountAsync(name).Result;
+            var result = StorageBuilder.DeleteStorageAccountAsync(ConfigurationManager.AppSettings["storageName"]).Result;
             Console.WriteLine(result);
         }
 
-        private static bool CreateCloudService(TokenCloudCredentials credential, bool isArm = false)
+        private static bool CreateCloudService(TokenCloudCredentials credential)
         {
             Console.WriteLine("Creando el servicio...");
             ServiceBuilder = new CloudServiceBuilder(credential);
-            var name = ConfigurationManager.AppSettings["serviceName"];
-            if (isArm)
-            {
-                name += "arm";
-            }
-
-            var result = ServiceBuilder.CreateCloudServiceAsync(name).Result;
+            var result = ServiceBuilder.CreateCloudServiceAsync(ConfigurationManager.AppSettings["serviceName"]).Result;
             Console.WriteLine(result.Message);
             return result.Succed;
         }
 
-        private static void DeleteService(bool isArm = false)
+        private static void DeleteService()
         {
             Console.WriteLine("Eliminando el servicio...");
-            var name = ConfigurationManager.AppSettings["serviceName"];
-            if (isArm)
-            {
-                name += "arm";
-            }
-
-            var result = ServiceBuilder.DeleteCloudServiceAsync(name).Result;
+            var result = ServiceBuilder.DeleteCloudServiceAsync(ConfigurationManager.AppSettings["serviceName"]).Result;
             Console.WriteLine(result);
         }
 
-        private static void CreateVirtuaMachine(TokenCloudCredentials credential, bool isArm = false)
+        private static void CreateVirtuaMachine(TokenCloudCredentials credential)
         {
             Console.WriteLine("Creando la virtual machine...");
             VmBuilder = new VirtualMachineBuilder(credential);
-            var vmName = ConfigurationManager.AppSettings["vmName"];
-            var storageName = ConfigurationManager.AppSettings["storageName"];
-            var serviceName = ConfigurationManager.AppSettings["serviceName"];
-            var deployName = ConfigurationManager.AppSettings["deployName"];
-            if (isArm)
-            {
-                vmName += "arm";
-                storageName += "arm";
-                serviceName += "arm";
-                deployName += "arm";
-            }
-
             var result = VmBuilder.CreateVirtualMachineAsync(
                     ConfigurationManager.AppSettings["imageFilter"],
                     ConfigurationManager.AppSettings["adminName"],
                     ConfigurationManager.AppSettings["adminPassword"],
-                    vmName,
-                    serviceName,
-                    storageName,
-                    deployName)
+                    ConfigurationManager.AppSettings["vmName"],
+                    ConfigurationManager.AppSettings["serviceName"],
+                    ConfigurationManager.AppSettings["storageName"],
+                    ConfigurationManager.AppSettings["deployName"])
                     .Result;
             Console.WriteLine(result);
         }
 
-        private static bool DeleteVirtuaMachine(bool isArm = false)
+        private static bool DeleteVirtuaMachine()
         {
             Console.WriteLine("Eliminando la VM...");
-            var deployName = ConfigurationManager.AppSettings["deployName"];
-            var serviceName = ConfigurationManager.AppSettings["serviceName"];
-            if (isArm)
-            {
-                deployName += "arm";
-                serviceName += "arm";
-            }
-            var result = VmBuilder.DeleteVirtualMachineAsync(serviceName, deployName).Result;
+            var result = VmBuilder.DeleteVirtualMachineAsync(ConfigurationManager.AppSettings["serviceName"], ConfigurationManager.AppSettings["deployName"]).Result;
             Console.WriteLine(result.Message);
             return result.Succed;
         }

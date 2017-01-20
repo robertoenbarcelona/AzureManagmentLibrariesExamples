@@ -124,7 +124,7 @@ namespace AzureManagmentLibPre.ConsoleHost
                     ConfigurationManager.AppSettings["availabilityName"],
                     ConfigurationManager.AppSettings["groupName"])
                     .Result;
-            Console.WriteLine(result);
+            Console.WriteLine(result.Message);
         }
 
         private static string GetAuthorizationHeader()

@@ -9,7 +9,7 @@ namespace AzureManagmentLibPre.ConsoleHost
 
     public class Program
     {
-        private static ResourceBuilder ResourceManager;
+        internal static ResourceBuilder ResourceManager;
 
         static void Main(string[] args)
         {

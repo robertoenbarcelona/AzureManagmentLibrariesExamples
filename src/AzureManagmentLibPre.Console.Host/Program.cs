@@ -9,7 +9,7 @@ namespace AzureManagmentLibPre.ConsoleHost
 
     public class Program
     {
-        private static ResourceBuilder ResourceManager;
+        internal static ResourceBuilder ResourceManager;
 
         static void Main(string[] args)
         {
@@ -48,12 +48,13 @@ namespace AzureManagmentLibPre.ConsoleHost
 
             if (proceed)
             {
-                Console.WriteLine("¿Proseguir?");
                 CreateVirtuaMachine(credential, subscripcionId);
             }
 
-            Console.WriteLine("¿Eliminar la VM?");
+            Console.WriteLine("¿Eliminar el Resource Group?");
             deleting = Console.ReadLine() == "y";
+            if (!deleting) { return; }
+            DeleteResourceGroup();
         }
 
         private static bool CreateResourceGroup(SubscriptionCloudCredentials credential)
@@ -120,10 +121,10 @@ namespace AzureManagmentLibPre.ConsoleHost
                     ConfigurationManager.AppSettings["vmName"],
                     ConfigurationManager.AppSettings["storageName"],
                     ConfigurationManager.AppSettings["nicName"],
-                    ConfigurationManager.AppSettings["avsetName"],
+                    ConfigurationManager.AppSettings["availabilityName"],
                     ConfigurationManager.AppSettings["groupName"])
                     .Result;
-            Console.WriteLine(result);
+            Console.WriteLine(result.Message);
         }
 
         private static string GetAuthorizationHeader()

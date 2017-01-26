@@ -43,7 +43,7 @@ namespace AzureManagmentLibPre.ConsoleHost
                                         },
                                         HardwareProfile = new HardwareProfile
                                         {
-                                            VmSize = "Standard_A0"
+                                            VmSize = "Standard_A4"
                                         },
                                         OsProfile = new OSProfile
                                         {
